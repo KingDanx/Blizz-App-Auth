@@ -24,30 +24,12 @@ const getAuth = async () =>
 //App gets auth token
 app.get("/auth", async (req, res) => {
   getAuth();
-  res.send(JSON.stringify({ success: "true" }));
+  res.send(
+    JSON.stringify({
+      success: "true",
+      token: token,
+    })
+  );
 });
-
-//Get guild basic data
-app.get(`/guild/:region/:realm/:name/:namespace/:locale`, async (req, res) => {
-  await getAuth();
-  await axios
-    .get(
-      `https://${req.params.region}.api.blizzard.com/data/wow/guild/${req.params.realm}/${req.params.name}?namespace=${req.params.namespace}&locale=${req.params.locale}&access_token=${token}`
-    )
-    .then((data) => res.send(data.data));
-});
-
-//Get guild roster data
-app.get(
-  `/guild/roster/:region/:realm/:name/:namespace/:locale`,
-  async (req, res) => {
-    await getAuth();
-    await axios
-      .get(
-        `https://${req.params.region}.api.blizzard.com/data/wow/guild/${req.params.realm}/${req.params.name}/roster?namespace=${req.params.namespace}&locale=${req.params.locale}&access_token=${token}`
-      )
-      .then((data) => res.send(data.data));
-  }
-);
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
