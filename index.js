@@ -1,11 +1,14 @@
 require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
+const cors = require("cors");
 
 const BNET_ID = process.env.BNET_OAUTH_CLIENT_ID;
 const BNET_SECRET = process.env.BNET_OAUTH_CLIENT_SECRET;
 
 const app = express();
+app.use(cors());
+
 const port = 5000;
 
 let token;
